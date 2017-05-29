@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+<% if @post.comments.count > 0 %>
+	<% @post.comments.each do |comment| %>
+	<div>Commented by: <%= comment.user.try(:first_name) %></div>
+		<p>Comment: <%= comment.body %></p>
+	<% end %>
+<% end %>
+
+<% if @post.user_id == current_user.id %>
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<% end %>
+<%= link_to 'Back To Listings', posts_path %> |
+<%= link_to 'Add Comment', new_post_comment_path(@post),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="display: none;">
+    
